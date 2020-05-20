@@ -26,7 +26,8 @@
             <div class="row">
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label for="nombreusuario" class="col-4 col-form-label">Nombre</label>
+                  <label for="nombreusuario" class="col-4 col-form-label">Nombre
+                    <span class="text-danger font-weight-bold">*</span></label>
                   <div class="col-8">
                     <input (keyup)="nombreUsuario()" [(ngModel)]="nombre.valor" type="text"
                       class="form-control input-peque" id="nombreusuario">
@@ -34,7 +35,8 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="tipodocumentotitular" class="col-4 col-form-label">Tipo de documento</label>
+                  <label for="tipodocumentotitular" class="col-4 col-form-label">Tipo de documento
+                    <span class="text-danger font-weight-bold">*</span></label>
                   <div class="col-8">
                     <select [(ngModel)]="datosTitular.tipodocumento" class="form-control input-peque"
                       [(ngModel)]="datosTitular.tipodocumento" id="tipodocumentotitular">
@@ -45,7 +47,8 @@
               </div>
               <div class="col-md-6">
                 <div class="form-group row">
-                  <label for="documentotitular" class="col-4 col-form-label">Número de documento</label>
+                  <label for="documentotitular" class="col-4 col-form-label">Número de documento
+                    <span class="text-danger font-weight-bold">*</span></label>
                   <div class="col-8">
                     <input [(ngModel)]="datosTitular.documentotitular" type="text"
                       class="form-control input-peque" id="documentotitular">
