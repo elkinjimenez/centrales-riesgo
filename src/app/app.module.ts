@@ -6,6 +6,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedModule } from './Shared/shared.module';
 import { FlujoCentralesModule } from './Modules/flujoCentrales/flujo-centrales.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { FlujoCentralesModule } from './Modules/flujoCentrales/flujo-centrales.m
     FormsModule,
     NgbModule,
     SharedModule,
-    FlujoCentralesModule
+    FlujoCentralesModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,8 @@
 import { Component, OnInit, Host, Optional } from '@angular/core';
 import { AppComponent } from 'src/app/app.component';
+import { ServiciosjavaService } from 'src/app/Services/serviciosjava.service';
+import { RespGeneral } from 'src/app/Models/flujoCentrales/resp-general';
+import { TipoDocumento } from 'src/app/Models/flujoCentrales/tipo-documento';
 
 declare var jQuery: any;
 declare var $: any;
@@ -11,10 +14,13 @@ declare var $: any;
 })
 export class DatosTitularComponent implements OnInit {
 
+  // DE LOS SERVICIOS
+  responseGeneral: RespGeneral;
+
   // VARIABLES:
+  tiposDocumento: TipoDocumento[];
   consultaCentrales: boolean;
   alerta = { texto: '', color: '', estado: false };
-  tiposDocumento = [{ id: '1', nombre: 'C.C' }, { id: '4', nombre: 'C.E' }, { id: '5', nombre: 'Pasaporte' }, { id: '2', nombre: 'NIT' }];
   nombre = { valor: '', mensaje: '', color: '', estado: false };
   botonValidar = { texto: 'Validar Información', estado: false };
   imei: string;
@@ -25,9 +31,12 @@ export class DatosTitularComponent implements OnInit {
 
   constructor(
     @Host() @Optional() public init: AppComponent,
+    private servicios: ServiciosjavaService,
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit() {
+    this.consumirTiposDocumento();
+  }
 
   pruebaModal() {
     this.init.alerta = {
@@ -39,12 +48,31 @@ export class DatosTitularComponent implements OnInit {
     this.consultaCentrales = true;
   }
 
+  consumirTiposDocumento() {
+    this.servicios.getTiposDocumento().subscribe(
+      data => {
+        console.log('Listado tipos documento: ', data);
+        this.responseGeneral = data as RespGeneral;
+        if (this.responseGeneral.isValid) {
+          this.tiposDocumento = JSON.parse(this.responseGeneral.message);
+          if (this.tiposDocumento[0].Description === ' ') {
+            this.tiposDocumento.shift();
+          }
+        } else {
+
+        }
+      }, error => {
+        console.log('Error lista tipos documento: ', error);
+      },
+    );
+  }
+
   nombreUsuario() {
     if (this.nombre.valor !== '') {
       this.nombre.color = 'text-success';
       this.nombre.mensaje = 'Válido';
       this.nombre.estado = true;
-      console.log ('OK');
+      console.log('OK');
     } else {
       this.nombre.color = 'text-danger';
       this.nombre.mensaje = 'No puede estar vacío.';
