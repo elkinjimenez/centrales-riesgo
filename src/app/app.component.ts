@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  alerta = { texto: '', color: '', icono: '' };
+  alerta = { texto: '', color: '', icono: ''};
 
 }

@@ -12,6 +12,7 @@ declare var $: any;
 export class DatosTitularComponent implements OnInit {
 
   // VARIABLES:
+  consultaCentrales: boolean;
   alerta = { texto: '', color: '', estado: false };
   tiposDocumento = [{ id: '1', nombre: 'C.C' }, { id: '4', nombre: 'C.E' }, { id: '5', nombre: 'Pasaporte' }, { id: '2', nombre: 'NIT' }];
   nombre = { valor: '', mensaje: '', color: '', estado: false };
@@ -32,13 +33,10 @@ export class DatosTitularComponent implements OnInit {
     this.init.alerta = {
       color: 'alerta-negativa',
       icono: 'fa-info-circle',
-      texto: 'Prueba mensaje estandar.'
+      texto: 'El usuario está reportado negativamente en centrales de riesgo.'
     };
     $('#modalNotifica').modal('show');
-  }
-  confirmar() {
-    // this.botonValidar.estado = true;
-    console.log ('CHECK!');
+    this.consultaCentrales = true;
   }
 
   nombreUsuario() {

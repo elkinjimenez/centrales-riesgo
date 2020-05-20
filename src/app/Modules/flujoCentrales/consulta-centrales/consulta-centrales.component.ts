@@ -11,5 +11,9 @@ export class ConsultaCentralesComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  confirmar() {
+    // this.botonValidar.estado = true;
+    console.log ('CHECK!');
+  }
 
 }
