@@ -36,5 +36,31 @@ export class DatosTitularComponent implements OnInit {
     };
     $('#modalNotifica').modal('show');
   }
+  confirmar() {
+    // this.botonValidar.estado = true;
+    console.log ('CHECK!');
+  }
+
+  nombreUsuario() {
+    if (this.nombre.valor !== '') {
+      this.nombre.color = 'text-success';
+      this.nombre.mensaje = 'Válido';
+      this.nombre.estado = true;
+      console.log ('OK');
+    } else {
+      this.nombre.color = 'text-danger';
+      this.nombre.mensaje = 'No puede estar vacío.';
+      this.nombre.estado = false;
+    }
+    this.valDatos();
+  }
+
+  valDatos() {
+    if (this.nombre.estado) {
+      this.botonValidar.estado = true;
+    } else {
+      this.botonValidar.estado = false;
+    }
+  }
 
 }
