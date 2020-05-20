@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+declare var jQuery: any;
+declare var $: any;
+
 @Component({
   selector: 'app-finalizar-atencion',
   templateUrl: './finalizar-atencion.component.html',
@@ -9,7 +12,10 @@ export class FinalizarAtencionComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() { }
+
+  finalizarAtencion() {
+    $('#modalFinalizarAtencion').modal('show');
   }
 
 }

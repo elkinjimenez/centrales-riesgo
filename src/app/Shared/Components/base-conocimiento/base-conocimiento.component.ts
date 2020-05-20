@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+declare var jQuery: any;
+declare var $: any;
+
 @Component({
   selector: 'app-base-conocimiento',
   templateUrl: './base-conocimiento.component.html',
@@ -9,7 +12,10 @@ export class BaseConocimientoComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit() { }
+
+  baseConocimiento() {
+    $('#modalBaseConocimiento').modal('show');
   }
 
 }

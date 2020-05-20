@@ -4,6 +4,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { DatosTitularComponent } from './datos-titular/datos-titular.component';
 import { ConsultaCentralesComponent } from './consulta-centrales/consulta-centrales.component';
+import { SharedModule } from 'src/app/Shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { ConsultaCentralesComponent } from './consulta-centrales/consulta-centra
   imports: [
     CommonModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    SharedModule
 
   ],
   exports: [

@@ -15,7 +15,8 @@ import { FinalizarAtencionComponent } from './Components/finalizar-atencion/fina
   ],
   exports: [
     BaseConocimientoComponent,
-    ModalNotificaComponent
+    ModalNotificaComponent,
+    FinalizarAtencionComponent
   ]
 })
 export class SharedModule { }

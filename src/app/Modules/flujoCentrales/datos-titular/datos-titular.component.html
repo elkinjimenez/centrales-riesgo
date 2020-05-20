@@ -1,4 +1,8 @@
 <div class="p-3">
+  <div class="d-flex justify-content-end">
+    <app-base-conocimiento></app-base-conocimiento>
+    <app-finalizar-atencion></app-finalizar-atencion>
+  </div>
   <div class="d-flex justify-content-start">
     <div>
       <h5 class="h5 font-weight-bold">Consulta Centrales de Riesgo</h5>
@@ -33,8 +37,8 @@
                   <label for="tipodocumentotitular" class="col-4 col-form-label">Tipo de documento
                     <span class="text-danger font-weight-bold">*</span></label>
                   <div class="col-8">
-                    <select [(ngModel)]="datosTitular.tipodocumento" class="form-control input-peque"
-                      [(ngModel)]="datosTitular.tipodocumento" id="tipodocumentotitular">
+                    <select class="form-control input-peque" [(ngModel)]="datosTitular.tipodocumento"
+                      id="tipodocumentotitular">
                       <option value="" selected disabled>Seleccione</option>
                       <option value="{{tipo.Id}}" *ngFor="let tipo of tiposDocumento">{{tipo.Description}}</option>
                     </select>
