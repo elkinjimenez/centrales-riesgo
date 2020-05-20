@@ -11,6 +11,17 @@ declare var $: any;
 })
 export class DatosTitularComponent implements OnInit {
 
+  // VARIABLES:
+  alerta = { texto: '', color: '', estado: false };
+  tiposDocumento = [{ id: '1', nombre: 'C.C' }, { id: '4', nombre: 'C.E' }, { id: '5', nombre: 'Pasaporte' }, { id: '2', nombre: 'NIT' }];
+  nombre = { valor: '', mensaje: '', color: '', estado: false };
+  botonValidar = { texto: 'Validar Información', estado: false };
+  imei: string;
+  datosTitular = {
+    tipodocumento: '',
+    documentotitular: ''
+  };
+
   constructor(
     @Host() @Optional() public init: AppComponent,
   ) { }

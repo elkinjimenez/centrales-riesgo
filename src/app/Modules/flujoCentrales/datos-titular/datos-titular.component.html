@@ -1,3 +1,107 @@
 <button (click)="pruebaModal()" class="btn tamano btn-danger">Prueba modal (Click aquí)</button>
 <h2>Validar</h2>
 <app-consulta-centrales></app-consulta-centrales>
+
+<!-- <div class="p-3">
+  <div class="d-flex justify-content-end mb-3">
+    <app-notif-usuario></app-notif-usuario>
+  </div> -->
+  <div class="d-flex justify-content-start">
+    <div>
+      <h5 class="h5 font-weight-bold">Consulta Centrales de Riesgo</h5>
+      <div class="p-1 mb-1 bg-danger">
+      </div>
+    </div>
+  </div>
+  <div *ngIf="alerta.estado" class="alert text-center {{alerta.color}}" role="alert">
+    <h5>{{alerta.texto}}</h5>
+  </div>
+  <div class="card mt-3">
+    <div class="card-body">
+      <h6 class="font-weight-bolder">
+        <img src="assets/images/report.png" style="max-height: 30px;">
+        <span>Validar</span>
+      </h6>
+      <div class="card">
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label for="nombreusuario" class="col-4 col-form-label">Nombre</label>
+                  <div class="col-8">
+                    <input (keyup)="nombreUsuario()" [(ngModel)]="nombre.valor" type="text"
+                      class="form-control input-peque" id="nombreusuario">
+                    <h6 class="{{nombre.color}} mt-2 font-weight-bold">{{nombre.mensaje}}</h6>
+                  </div>
+                </div>
+                <div class="form-group row">
+                  <label for="tipodocumentotitular" class="col-4 col-form-label">Tipo de documento</label>
+                  <div class="col-8">
+                    <select [(ngModel)]="datosTitular.tipodocumento" disabled class="form-control input-peque"
+                      [(ngModel)]="datosTitular.tipodocumento" id="tipodocumentotitular">
+                      <option value="{{tipo.id}}" *ngFor="let tipo of tiposDocumento">{{tipo.nombre}}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group row">
+                  <label for="documentotitular" class="col-4 col-form-label">Número de documento</label>
+                  <div class="col-8">
+                    <input [(ngModel)]="datosTitular.documentotitular" disabled type="text"
+                      class="form-control input-peque" id="documentotitular">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-4"></div>
+                  <div class="col-8">
+                    <button (click)="confirmar()" [disabled]="!botonValidar.estado"
+                      class="btn btn-success tamano btn-block">{{botonValidar.texto}}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- CV: AQUÍ DEPENDE DE SI LO MANEJAMOS EN OTRO COMPONENTE O SOLO EN ESTE....  -->
+  <div *ngIf="botonValidar.estado" >
+  <div class="card mt-3">
+    <div class="card-body">
+      <h6 class="font-weight-bolder">
+        <img src="assets/images/report.png" style="max-height: 30px;">
+        <span>Consulta Centrales de Riesgo</span>
+      </h6>
+      <div class="card">
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              <div class="col">
+                <div class="form-group row">
+                  <label for="pregunta" class="col-4 col-form-label">¿Desea actualizar información en centrales
+                    de riesgo?</label>
+                  <div class="col-4">
+                    <button (click)="confirmar()" [disabled]="!botonValidar.estado"
+                      class="btn btn-success btn-block">Actualizar Información</button>
+                  </div>
+                  <div class="col-8">
+                    <div class="custom-control custom-switch">
+                      <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                      <label class="custom-control-label" for="customSwitch1">Acepto <a href="">Términos y
+                          Condiciones</a></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
