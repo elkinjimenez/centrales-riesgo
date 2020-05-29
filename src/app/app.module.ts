@@ -7,10 +7,16 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './Shared/shared.module';
 import { FlujoCentralesModule } from './Modules/flujoCentrales/flujo-centrales.module';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpGenericoService } from './Services/HttpGenerico.service';
+import { BloqueadorUIComponent } from './Shared/Components/blockui/bloqueadorUI.component';
+import { BloqueadorUIService } from './Services/bloqueadorUI.service';
+import { BlockUIModule } from 'ng-block-ui';
+import { ModalNotificaComponent } from './Shared/Components/modal-notifica/modal-notifica.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    BloqueadorUIComponent
   ],
   imports: [
     BrowserModule,
@@ -19,9 +25,19 @@ import { HttpClientModule } from '@angular/common/http';
     NgbModule,
     SharedModule,
     FlujoCentralesModule,
-    HttpClientModule
+    HttpClientModule,
+    BlockUIModule.forRoot({
+      template: BloqueadorUIComponent
+    })
   ],
-  providers: [],
+  providers: [
+    HttpGenericoService,
+    BloqueadorUIService,
+    ModalNotificaComponent
+  ],
+  entryComponents: [
+    BloqueadorUIComponent
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

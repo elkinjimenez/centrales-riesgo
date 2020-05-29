@@ -1,8 +1,9 @@
-import { Component, OnInit, Host, Optional } from '@angular/core';
+import { Component, OnInit, Host, Optional, OnDestroy } from '@angular/core';
 import { AppComponent } from 'src/app/app.component';
 import { ServiciosjavaService } from 'src/app/Services/serviciosjava.service';
 import { RespGeneral } from 'src/app/Models/flujoCentrales/resp-general';
 import { TipoDocumento } from 'src/app/Models/flujoCentrales/tipo-documento';
+import { Subscription } from 'rxjs';
 
 declare var jQuery: any;
 declare var $: any;
@@ -12,7 +13,9 @@ declare var $: any;
   templateUrl: './datos-titular.component.html',
   styleUrls: ['./datos-titular.component.css']
 })
-export class DatosTitularComponent implements OnInit {
+export class DatosTitularComponent implements OnInit, OnDestroy {
+
+  private subscription: Subscription;
 
   // DE LOS SERVICIOS
   responseGeneral: RespGeneral;
@@ -49,7 +52,7 @@ export class DatosTitularComponent implements OnInit {
   }
 
   consumirTiposDocumento() {
-    this.servicios.getTiposDocumento().subscribe(
+    this.subscription = this.servicios.getTiposDocumento('').subscribe(
       data => {
         console.log('Listado tipos documento: ', data);
         this.responseGeneral = data as RespGeneral;
@@ -87,6 +90,10 @@ export class DatosTitularComponent implements OnInit {
     } else {
       this.botonValidar.estado = false;
     }
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
 }
