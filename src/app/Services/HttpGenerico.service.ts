@@ -2,71 +2,72 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, throwError, EMPTY } from 'rxjs';
 import { catchError, finalize } from 'rxjs/operators';
-import { BloqueadorUIService } from './bloqueadorUI.service';
-import { ModalNotificaComponent } from '../Shared/Components/modal-notifica/modal-notifica.component';
+import { UtilService } from './util.service';
 
 
 @Injectable()
 export class HttpGenericoService {
   constructor(
     public http: HttpClient,
-    private bloqueadorService: BloqueadorUIService,
-    private message: ModalNotificaComponent
+    private util: UtilService,
   ) {
   }
 
   get(endPoint: string, descripService: string, detalleError: string): Observable<any> {
-    this.bloqueadorService.bloquearUI();
+    this.util.bloquearUI();
     return this.http.get(endPoint)
       .pipe(
         catchError(err => {
           return this.onCatchError(err, descripService, detalleError);
         }),
         finalize(() => {
-          this.bloqueadorService.desbloquearUI();
+          this.util.desbloquearUI();
         })
       );
   }
 
   post(endPoint: string, body: any, descripService: string, detalleError: string): Observable<any> {
-    this.bloqueadorService.bloquearUI();
+    this.util.bloquearUI();
     return this.http.post(endPoint, body)
       .pipe(
         catchError(err => {
           return this.onCatchError(err, descripService, detalleError);
         }),
         finalize(() => {
-          this.bloqueadorService.desbloquearUI();
+          this.util.desbloquearUI();
         })
       );
   }
 
   put(endPoint: string, body: any, descripService: string, detalleError: string): Observable<any> {
-    this.bloqueadorService.bloquearUI();
+    this.util.bloquearUI();
     return this.http.put(endPoint, body)
       .pipe(
         catchError(err => {
           return this.onCatchError(err, descripService, detalleError);
         }),
         finalize(() => {
-          this.bloqueadorService.desbloquearUI();
+          this.util.desbloquearUI();
         })
       );
   }
 
 
   private onCatchError(response, descripService, detalleError): Observable<any> {
-    this.message.clean();
-    this.message.alerta.icono = 'fas fa-times';
-    this.message.alerta.color = 'alerta-negativa';
+
 
     if (response.status === 0) {
       console.log('Estado: error, texto: Error del sistema: no hay conexión con el servidor');
-      this.message.alerta.texto = 'Hola karold';
-      this.message.show();
+
+      this.util.alerta = {
+        color: 'alerta-negativa',
+        icono: 'fas fa-times',
+        texto: 'Error del sistema: no hay conexión con el servidor'
+      };
+      this.util.lanzarModal();
       return EMPTY;
     } else if (response.status === 400) {
-      let mensajes = response.error;
+      const mensajes = response.error;
       mensajes.forEach(mensaje => {
         // AGREGAR LOS ERRORES EN UNA VARIABLE DE MENSAJES PARA EL CLIENTE
       });

@@ -9,9 +9,8 @@ import { FlujoCentralesModule } from './Modules/flujoCentrales/flujo-centrales.m
 import { HttpClientModule } from '@angular/common/http';
 import { HttpGenericoService } from './Services/HttpGenerico.service';
 import { BloqueadorUIComponent } from './Shared/Components/blockui/bloqueadorUI.component';
-import { BloqueadorUIService } from './Services/bloqueadorUI.service';
+import { UtilService } from './Services/util.service';
 import { BlockUIModule } from 'ng-block-ui';
-import { ModalNotificaComponent } from './Shared/Components/modal-notifica/modal-notifica.component';
 
 @NgModule({
   declarations: [
@@ -32,8 +31,7 @@ import { ModalNotificaComponent } from './Shared/Components/modal-notifica/modal
   ],
   providers: [
     HttpGenericoService,
-    BloqueadorUIService,
-    ModalNotificaComponent
+    UtilService
   ],
   entryComponents: [
     BloqueadorUIComponent

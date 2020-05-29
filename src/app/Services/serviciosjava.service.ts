@@ -18,7 +18,6 @@ export class ServiciosjavaService {
     return this.httpGenerico.get(URL, descripService, detalleError);
   }
 
-
   // IDEA PARA CENTRALIZAR EL HEADERREQUEST
   headerRequest(body: boolean, bodyAnexo?: any) {
     return {

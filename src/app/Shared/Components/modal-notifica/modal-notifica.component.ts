@@ -1,34 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component } from '@angular/core';
+import { UtilService } from 'src/app/Services/util.service';
 
-declare var jQuery: any;
-declare var $: any;
 
 @Component({
   selector: 'app-modal-notifica',
   templateUrl: './modal-notifica.component.html',
   styleUrls: ['./modal-notifica.component.css']
 })
-export class ModalNotificaComponent implements OnInit {
+export class ModalNotificaComponent {
 
-  @Input() alerta = { texto: '', color: '', icono: '' };
+  constructor(
+    public utilService: UtilService
+  ) { }
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-  clean() {
-    this.alerta.texto = '';
-    this.alerta.color = '';
-    this.alerta.icono = '';
-  }
-
-  show() {
-    console.log('Estoy por aca en el modal');
-    console.log(this.alerta.texto);
-    console.log(this.alerta.color);
-    console.log(this.alerta.icono);
-    $('#modalNotifica').modal('show');
-  }
 
 }

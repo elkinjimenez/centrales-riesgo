@@ -1,9 +1,9 @@
-import { Component, OnInit, Host, Optional, OnDestroy } from '@angular/core';
-import { AppComponent } from 'src/app/app.component';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ServiciosjavaService } from 'src/app/Services/serviciosjava.service';
 import { RespGeneral } from 'src/app/Models/flujoCentrales/resp-general';
 import { TipoDocumento } from 'src/app/Models/flujoCentrales/tipo-documento';
 import { Subscription } from 'rxjs';
+import { UtilService } from 'src/app/Services/util.service';
 
 declare var jQuery: any;
 declare var $: any;
@@ -33,8 +33,8 @@ export class DatosTitularComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    @Host() @Optional() public init: AppComponent,
     private servicios: ServiciosjavaService,
+    private util: UtilService,
   ) { }
 
   ngOnInit() {
@@ -42,12 +42,13 @@ export class DatosTitularComponent implements OnInit, OnDestroy {
   }
 
   pruebaModal() {
-    this.init.alerta = {
+    this.util.limpiarModal();
+    this.util.alerta = {
       color: 'alerta-negativa',
       icono: 'fa-info-circle',
       texto: 'El usuario está reportado negativamente en centrales de riesgo.'
     };
-    $('#modalNotifica').modal('show');
+    this.util.lanzarModal();
     this.consultaCentrales = true;
   }
 
