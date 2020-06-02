@@ -37,7 +37,7 @@
                   <label for="tipodocumentotitular" class="col-4 col-form-label">Tipo de documento
                     <span class="text-danger font-weight-bold">*</span></label>
                   <div class="col-8">
-                    <select class="form-control input-peque" [(ngModel)]="datosTitular.tipodocumento"
+                    <select class="form-control input-peque" [(ngModel)]="datosTitular.tipoDocumento"
                       id="tipodocumentotitular">
                       <option value="" selected disabled>Seleccione</option>
                       <option value="{{tipo.Id}}" *ngFor="let tipo of tiposDocumento">{{tipo.Description}}</option>
@@ -50,7 +50,7 @@
                   <label for="documentotitular" class="col-4 col-form-label">Número de documento
                     <span class="text-danger font-weight-bold">*</span></label>
                   <div class="col-8">
-                    <input [(ngModel)]="datosTitular.documentotitular" type="text" class="form-control input-peque"
+                    <input [(ngModel)]="datosTitular.documento" type="text" class="form-control input-peque"
                       id="documentotitular">
                   </div>
                 </div>

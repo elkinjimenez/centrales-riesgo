@@ -4,6 +4,8 @@ import { RespGeneral } from 'src/app/Models/flujoCentrales/resp-general';
 import { TipoDocumento } from 'src/app/Models/flujoCentrales/tipo-documento';
 import { Subscription } from 'rxjs';
 import { UtilService } from 'src/app/Services/util.service';
+import { RespGetInfoClient } from 'src/app/Models/flujoCentrales/resp-get-info-client';
+import { DatosTitular } from 'src/app/Models/flujoCentrales/datos-titular';
 
 declare var jQuery: any;
 declare var $: any;
@@ -19,6 +21,7 @@ export class DatosTitularComponent implements OnInit, OnDestroy {
 
   // DE LOS SERVICIOS
   responseGeneral: RespGeneral;
+  responseGetInfoClient: RespGetInfoClient;
 
   // VARIABLES:
   tiposDocumento: TipoDocumento[];
@@ -27,18 +30,25 @@ export class DatosTitularComponent implements OnInit, OnDestroy {
   nombre = { valor: '', mensaje: '', color: '', estado: false };
   botonValidar = { texto: 'Validar Información', estado: false };
   imei: string;
-  datosTitular = {
-    tipodocumento: '',
-    documentotitular: ''
-  };
+  datosTitular = {} as DatosTitular;
 
   constructor(
     private servicios: ServiciosjavaService,
     private util: UtilService,
-  ) { }
+  ) {
+    // VARIABLES SESSIONSTORAGE
+
+    const tipo = sessionStorage.getItem('documentType');
+    if (tipo !== undefined) { this.datosTitular.tipoDocumento = tipo; }
+
+    const numero = sessionStorage.getItem('documentNumber');
+    if (numero !== undefined) { this.datosTitular.documento = numero; }
+
+  }
 
   ngOnInit() {
     this.consumirTiposDocumento();
+    this.consumirGetInfoClient();
   }
 
   pruebaModal() {
@@ -95,6 +105,24 @@ export class DatosTitularComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+  }
+
+  consumirGetInfoClient() {
+    const errorM = 'Error al consultar los datos del titular.';
+    this.servicios.getInfoClient(errorM, this.datosTitular.documento, this.datosTitular.tipoDocumento).subscribe(
+      data => {
+        console.log('Datos de GetInfoClient: ', data);
+        this.responseGeneral = data as RespGeneral;
+        if (this.responseGeneral.isValid) {
+          this.responseGetInfoClient = JSON.parse(this.responseGeneral.message);
+          if (this.responseGetInfoClient.isValid) {
+            this.nombre.valor = this.responseGetInfoClient.firstName;
+          }
+        }
+      }, error => {
+        console.log('Error GetInfoClient: ', error);
+      }
+    );
   }
 
 }
