@@ -26,11 +26,16 @@ export class DatosTitularComponent implements OnInit, OnDestroy {
   // VARIABLES:
   tiposDocumento: TipoDocumento[];
   consultaCentrales: boolean;
-  alerta = { texto: '', color: '', estado: false };
-  nombre = { valor: '', mensaje: '', color: '', estado: false };
+
   botonValidar = { texto: 'Validar Información', estado: false };
   imei: string;
-  datosTitular = {} as DatosTitular;
+  datosTitular = {
+    documento: {},
+    tipoDocumento: {},
+    nombre: {},
+    fechaInicio: {},
+    fechaFin: {},
+  } as DatosTitular;
 
   constructor(
     private servicios: ServiciosjavaService,
@@ -39,14 +44,22 @@ export class DatosTitularComponent implements OnInit, OnDestroy {
     // VARIABLES SESSIONSTORAGE
 
     const tipo = sessionStorage.getItem('documentType');
-    if (tipo !== undefined) { this.datosTitular.tipoDocumento = tipo; }
+    if (tipo !== undefined) { this.datosTitular.tipoDocumento.valor = tipo; }
 
     const numero = sessionStorage.getItem('documentNumber');
-    if (numero !== undefined) { this.datosTitular.documento = numero; }
+    if (numero !== undefined) { this.datosTitular.documento.valor = numero; }
 
   }
 
   ngOnInit() {
+
+    // INICIALIZANDO VARIABLES
+    this.datosTitular.fechaInicio.campo = true;
+    this.datosTitular.fechaFin.campo = true;
+    this.datosTitular.nombre.campo = true;
+    this.datosTitular.tipoDocumento.campo = true;
+    this.datosTitular.documento.campo = true;
+
     this.consumirTiposDocumento();
     this.consumirGetInfoClient();
   }
@@ -82,21 +95,21 @@ export class DatosTitularComponent implements OnInit, OnDestroy {
   }
 
   nombreUsuario() {
-    if (this.nombre.valor !== '') {
-      this.nombre.color = 'text-success';
-      this.nombre.mensaje = 'Válido';
-      this.nombre.estado = true;
+    if (this.datosTitular.nombre.valor !== '') {
+      this.datosTitular.nombre.color = 'text-success';
+      this.datosTitular.nombre.mensaje = 'Válido';
+      this.datosTitular.nombre.estado = true;
       console.log('OK');
     } else {
-      this.nombre.color = 'text-danger';
-      this.nombre.mensaje = 'No puede estar vacío.';
-      this.nombre.estado = false;
+      this.datosTitular.nombre.color = 'text-danger';
+      this.datosTitular.nombre.mensaje = 'No puede estar vacío.';
+      this.datosTitular.nombre.estado = false;
     }
     this.valDatos();
   }
 
   valDatos() {
-    if (this.nombre.estado) {
+    if (this.datosTitular.nombre.estado) {
       this.botonValidar.estado = true;
     } else {
       this.botonValidar.estado = false;
@@ -109,18 +122,41 @@ export class DatosTitularComponent implements OnInit, OnDestroy {
 
   consumirGetInfoClient() {
     const errorM = 'Error al consultar los datos del titular.';
-    this.servicios.getInfoClient(errorM, this.datosTitular.documento, this.datosTitular.tipoDocumento).subscribe(
+    this.servicios.getInfoClient(errorM, this.datosTitular.documento.valor, this.datosTitular.tipoDocumento.valor).subscribe(
       data => {
         console.log('Datos de GetInfoClient: ', data);
         this.responseGeneral = data as RespGeneral;
+        this.responseGetInfoClient = JSON.parse(this.responseGeneral.message);
         if (this.responseGeneral.isValid) {
-          this.responseGetInfoClient = JSON.parse(this.responseGeneral.message);
           if (this.responseGetInfoClient.isValid) {
-            this.nombre.valor = this.responseGetInfoClient.firstName;
+            this.datosTitular.nombre.valor = this.responseGetInfoClient.firstName + ' ' + this.responseGetInfoClient.firstSurname;
+            this.datosTitular.nombre.campo = false;
+            this.datosTitular.tipoDocumento.campo = false;
+            this.datosTitular.documento.campo = false;
+          } else {
+            this.util.alerta = {
+              color: 'alerta-negativa',
+              icono: 'fas fa-info-circle',
+              texto: this.responseGetInfoClient.description + '. Por favor intente de nuevo.'
+            };
+            this.util.lanzarModal();
           }
+        } else {
+          this.util.alerta = {
+            color: 'alerta-negativa',
+            icono: 'fas fa-info-circle',
+            texto: this.responseGetInfoClient.description + '. Por favor intente de nuevo.'
+          };
+          this.util.lanzarModal();
         }
       }, error => {
         console.log('Error GetInfoClient: ', error);
+        this.util.alerta = {
+          color: 'alerta-negativa',
+          icono: 'fas fa-info-circle',
+          texto: 'No se logró consultar los datos del cliente. Por favor intente de nuevo.'
+        };
+        this.util.lanzarModal();
       }
     );
   }
