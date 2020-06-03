@@ -10,9 +10,6 @@
       </div>
     </div>
   </div>
-  <!-- <div *ngIf="alerta.estado" class="alert text-center {{alerta.color}}" role="alert">
-    <h5>{{alerta.texto}}</h5>
-  </div> -->
   <div class="card mt-3">
     <div class="card-body">
       <h6 class="font-weight-bolder">
@@ -59,8 +56,10 @@
                   <label for="nacimientotitular" class="col-4 col-form-label">Fecha Inicio <span
                       class="text-danger">*</span></label>
                   <div class="col-8">
-                    <input [disabled]="!datosTitular.fechaInicio.campo" [(ngModel)]="datosTitular.fechaInicio.valor"
-                      type="date" class="form-control input-peque" id="nacimientotitular">
+                    <input (keyup)="validarFechaInicio(); validarFechaFin()"
+                      (change)="validarFechaInicio(); validarFechaFin()" [disabled]="!datosTitular.fechaInicio.campo"
+                      [(ngModel)]="datosTitular.fechaInicio.valor" type="date" class="form-control input-peque"
+                      id="nacimientotitular">
                     <h6 class="font-weight-bold mt-2 {{datosTitular.fechaInicio.color}}">
                       {{datosTitular.fechaInicio.mensaje}}</h6>
                   </div>
@@ -69,8 +68,10 @@
                   <label for="nacimientotitular" class="col-4 col-form-label">Fecha Fin <span
                       class="text-danger">*</span></label>
                   <div class="col-8">
-                    <input [disabled]="!datosTitular.fechaFin.campo" [(ngModel)]="datosTitular.fechaFin.valor"
-                      type="date" class="form-control input-peque" id="nacimientotitular">
+                    <input (keyup)="validarFechaFin(); validarFechaInicio()"
+                      (change)="validarFechaFin(); validarFechaInicio()" [disabled]="!datosTitular.fechaFin.campo"
+                      [(ngModel)]="datosTitular.fechaFin.valor" type="date" class="form-control input-peque"
+                      id="nacimientotitular">
                     <h6 class="font-weight-bold mt-2 {{datosTitular.fechaFin.color}}">
                       {{datosTitular.fechaFin.mensaje}}</h6>
                   </div>

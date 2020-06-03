@@ -26,6 +26,7 @@ export class DatosTitularComponent implements OnInit, OnDestroy {
   // VARIABLES:
   tiposDocumento: TipoDocumento[];
   consultaCentrales: boolean;
+  fechaActual = new Date();
 
   botonValidar = { texto: 'Validar Información', estado: false };
   imei: string;
@@ -40,16 +41,7 @@ export class DatosTitularComponent implements OnInit, OnDestroy {
   constructor(
     private servicios: ServiciosjavaService,
     private util: UtilService,
-  ) {
-    // VARIABLES SESSIONSTORAGE
-
-    const tipo = sessionStorage.getItem('documentType');
-    if (tipo !== undefined) { this.datosTitular.tipoDocumento.valor = tipo; }
-
-    const numero = sessionStorage.getItem('documentNumber');
-    if (numero !== undefined) { this.datosTitular.documento.valor = numero; }
-
-  }
+  ) { }
 
   ngOnInit() {
 
@@ -60,8 +52,36 @@ export class DatosTitularComponent implements OnInit, OnDestroy {
     this.datosTitular.tipoDocumento.campo = true;
     this.datosTitular.documento.campo = true;
 
-    this.consumirTiposDocumento();
-    this.consumirGetInfoClient();
+
+
+    if (sessionStorage.length > 0) {
+      // VARIABLES SESSIONSTORAGE
+
+      const tipo = sessionStorage.getItem('documentType');
+      if (tipo !== undefined) { this.datosTitular.tipoDocumento.valor = tipo; }
+
+      const numero = sessionStorage.getItem('documentNumber');
+      if (numero !== undefined) { this.datosTitular.documento.valor = numero; }
+
+      // INCIA FLUJO
+      this.consumirTiposDocumento();
+      this.consumirGetInfoClient();
+
+    } else {
+      this.util.limpiarModal();
+      this.util.alerta = {
+        color: 'alerta-negativa',
+        icono: 'fa-info-circle',
+        texto: 'No se lograron obtener variables para iniciar el flujo. Por favor recargue.'
+      };
+      this.util.lanzarModal();
+      this.datosTitular.documento.campo = false;
+      this.datosTitular.tipoDocumento.campo = false;
+      this.datosTitular.nombre.campo = false;
+      this.datosTitular.fechaFin.campo = false;
+      this.datosTitular.fechaInicio.campo = false;
+      this.botonValidar.estado = false;
+    }
   }
 
   pruebaModal() {
@@ -109,7 +129,13 @@ export class DatosTitularComponent implements OnInit, OnDestroy {
   }
 
   valDatos() {
-    if (this.datosTitular.nombre.estado) {
+    if (
+      this.datosTitular.nombre.estado &&
+      this.datosTitular.documento.estado &&
+      this.datosTitular.tipoDocumento.estado &&
+      this.datosTitular.fechaInicio.estado &&
+      this.datosTitular.fechaFin.estado
+    ) {
       this.botonValidar.estado = true;
     } else {
       this.botonValidar.estado = false;
@@ -130,9 +156,14 @@ export class DatosTitularComponent implements OnInit, OnDestroy {
         if (this.responseGeneral.isValid) {
           if (this.responseGetInfoClient.isValid) {
             this.datosTitular.nombre.valor = this.responseGetInfoClient.firstName + ' ' + this.responseGetInfoClient.firstSurname;
+            // INHABILITAR CAMPOS
             this.datosTitular.nombre.campo = false;
             this.datosTitular.tipoDocumento.campo = false;
             this.datosTitular.documento.campo = false;
+            // CONFIRMAR ESTADO DE CAMPOS LLENOS
+            this.datosTitular.nombre.estado = true;
+            this.datosTitular.documento.estado = true;
+            this.datosTitular.tipoDocumento.estado = true;
           } else {
             this.util.alerta = {
               color: 'alerta-negativa',
@@ -159,6 +190,42 @@ export class DatosTitularComponent implements OnInit, OnDestroy {
         this.util.lanzarModal();
       }
     );
+  }
+
+  validarFechaFin() {
+    const fechaDigitada = new Date(this.datosTitular.fechaFin.valor);
+    if (this.datosTitular.fechaFin.valor === '' || this.datosTitular.fechaFin.valor === undefined) {
+      this.datosTitular.fechaFin.mensaje = 'Fecha vacía';
+      this.datosTitular.fechaFin.color = 'text-danger';
+      this.datosTitular.fechaFin.estado = false;
+    } else if (fechaDigitada > this.fechaActual) {
+      this.datosTitular.fechaFin.mensaje = 'No debe ser una fecha mayor a hoy';
+      this.datosTitular.fechaFin.color = 'text-danger';
+      this.datosTitular.fechaFin.estado = false;
+    } else {
+      this.datosTitular.fechaFin.mensaje = 'Fecha válida.';
+      this.datosTitular.fechaFin.color = 'text-success';
+      this.datosTitular.fechaFin.estado = true;
+    }
+    this.valDatos();
+  }
+
+  validarFechaInicio() {
+    const fechaDigitada = new Date(this.datosTitular.fechaInicio.valor);
+    if (this.datosTitular.fechaInicio.valor === '' || this.datosTitular.fechaInicio.valor === undefined) {
+      this.datosTitular.fechaInicio.mensaje = 'Fecha vacía';
+      this.datosTitular.fechaInicio.color = 'text-danger';
+      this.datosTitular.fechaInicio.estado = false;
+    } else if (fechaDigitada > this.fechaActual) {
+      this.datosTitular.fechaInicio.mensaje = 'No debe ser una fecha mayor a hoy';
+      this.datosTitular.fechaInicio.color = 'text-danger';
+      this.datosTitular.fechaInicio.estado = false;
+    } else {
+      this.datosTitular.fechaInicio.mensaje = 'Fecha válida.';
+      this.datosTitular.fechaInicio.color = 'text-success';
+      this.datosTitular.fechaInicio.estado = true;
+    }
+    this.valDatos();
   }
 
 }

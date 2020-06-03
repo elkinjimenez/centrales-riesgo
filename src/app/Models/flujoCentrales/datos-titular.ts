@@ -30,7 +30,7 @@ interface FechaIncio {
   valor: string;
   mensaje: string;
   color: string;
-  estado: string;
+  estado: boolean;
   campo: boolean;
 }
 
@@ -38,6 +38,6 @@ interface FechaFin {
   valor: string;
   mensaje: string;
   color: string;
-  estado: string;
+  estado: boolean;
   campo: boolean;
 }
