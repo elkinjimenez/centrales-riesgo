@@ -13,14 +13,14 @@
                 <label for="pregunta" class="col-4 col-form-label">¿Desea actualizar información en centrales
                   de riesgo?</label>
                 <div class="col-4">
-                  <button (click)="confirmar()"
-                    class="btn btn-success tamano btn-block">Actualizar Información</button>
+                  <button (click)="confirmar()" class="btn btn-success tamano btn-block">Actualizar Información</button>
                 </div>
                 <div class="col-8">
                   <div class="custom-control custom-switch">
-                    <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                    <label class="custom-control-label" for="customSwitch1"><small>Acepto <a href="">Términos y
-                        Condiciones</a></small><span class="text-danger font-weight-bold">*</span></label>
+                    <input type="checkbox" class="custom-control-input" id="switchTerminosCondiciones">
+                    <label class="custom-control-label" for="switchTerminosCondiciones"><small>Acepto <a
+                          class="text-primary" (click)="abrirCondiciones()">Términos y Condiciones</a>
+                      </small><span class="text-danger font-weight-bold">*</span></label>
                   </div>
                 </div>
               </div>
@@ -31,4 +31,32 @@
     </div>
   </div>
 </div>
+<div class="modal fade" id="modalTerminosCondiciones" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header border-0">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">Cerrar</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="card shadow-sm rounded-sm">
+          <div class="card-body">
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-5">
 
+                </div>
+                <div class="col-md-7">
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

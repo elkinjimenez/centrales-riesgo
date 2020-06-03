@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+declare var jQuery: any;
+declare var $: any;
+
 @Component({
   selector: 'app-consulta-centrales',
   templateUrl: './consulta-centrales.component.html',
@@ -13,7 +16,11 @@ export class ConsultaCentralesComponent implements OnInit {
   }
   confirmar() {
     // this.botonValidar.estado = true;
-    console.log ('CHECK!');
+    console.log('CHECK!');
+  }
+
+  abrirCondiciones() {
+    $('#modalTerminosCondiciones').modal('show');
   }
 
 }
