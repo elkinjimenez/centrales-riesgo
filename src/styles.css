@@ -1,96 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
-
-.tamano {
-  padding: 0px 10px;
-  height: 22px;
+/* CHALLENGE */
+.alert {
+  border-radius: 10px;
+  font-weight: bolder;
 }
 
-button{
-  border-radius:50rem!important
+.alert-completed {
+  background-color: #A0ECB1;
 }
 
-.boton-rojo {
-  background-color: #ef3829;
-  color: white;
+.alert-progress {
+  background-color: #F5D565;
 }
 
-.boton-rojo:hover {
-  background-color: #b7202e;
-  color: white;
+.alert-won {
+  background-color: #F7D4D3;
 }
 
-.input-peque {
-  font-size: 12px;
-  height:22px;
-  padding: 0px 5px;
+.alert-created {
+  background-color: #E3E8EF;
 }
 
-.col-form-label {
-  font-weight: bold;
-  font-size: 12px;
-  padding: 0px;
+.icon-task {
+  background-color: #F8FAFC;
+  padding: 6px;
+  border-radius: 10px;
 }
 
-.btn {
-  font-size: 12px;
-  border: 0px;
+.icon-task-completed {
+  background-color: #32D657;
 }
 
-.btn-success{
-  background-color: #008000;
+.icon-task-progress {
+  background-color: #E9A23B;
 }
 
-.btn-success:hover{
-  background-color: #016901;
+.icon-task-won {
+  background-color: #DD524C;
 }
 
-.text-success {
-  font-size: 12px;
-  color: #008000;
+.icon-task-created {
+  background-color: #97A3B6;
 }
 
-.btn-secondary {
-  background-color: #757575;
+.alert-add {
+  background-color: #F5E8D5;
 }
 
-.btn-secondary:hover {
-  background-color: #6b6969;
-}
-
-.btn-danger {
-  background-color: #DA291C;
-}
-
-.text-danger {
-  font-size: 12px;
-  color: #DA291C!important;
-}
-
-.btn-danger:hover {
-  background-color: #aa1a10;
-}
-
-.h5{
-  font-size: 20px;
-}
-
-.close {
-  font-size: 14px;
-}
-
-.alerta-negativa {
-  color: white;
-  background-color: #B1070FC7;
-}
-
-.alerta-positiva {
-  color: white;
-  background-color: #008000CC;
-}
-
-.mdl-dialog {
-  width: fit-content !important;
-  min-width: 30% !important;
-  padding: 30px;
-  border-radius: 5px;
-}
+/* CHALLENGE */
