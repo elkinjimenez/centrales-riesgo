@@ -13,8 +13,6 @@ export class ChallengeComponent {
 
   constructor(
     public tasks: TaskService,
-  ) {
-
-  }
+  ) { }
 
 }
